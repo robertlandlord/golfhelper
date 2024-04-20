@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import ffmpeg
 import click
 import os
@@ -43,7 +44,7 @@ logger.addHandler(handler)
 init = click.Group(help='Helper for organizing golf swing videos')
 
 @init.command('setup_tool', help='Sets up the root directory to save golf videos')
-@click.option('--root', prompt='Root directory to use', help='Root directory for golf videos', type=click.Path(exists=False, file_okay=False, dir_okay=True, writable=True, resolve_path=True))
+@click.option('--root', prompt='Root directory to use', help='Root directory for golf videos', type=click.Path(exists=False, file_okay=False, dir_okay=True, writable=True))
 @click.option('--max-video-size-mb', default=5)
 def setup_tool(root, max_video_size_mb):
     """
