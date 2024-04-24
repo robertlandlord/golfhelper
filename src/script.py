@@ -80,6 +80,7 @@ def organize(video, club):
     # Load our config to check where videos should be stored
     if video.startswith('~'):
         video = os.path.expanduser(video)
+    original_path = video
     config = get_config()
     root_dir = config[CONFIG_KEYS.ROOT.name]
     max_video_size_bytes = config[CONFIG_KEYS.MAX_VIDEO_SIZE_MB.name] * 1024 * 1024
@@ -139,6 +140,9 @@ def organize(video, club):
         logger.info("Removing uncompressed video...")
         os.remove(output_file_uncompressed)
     logger.info("Created a video at: {}".format(output_file_compressed))
+    response = click.prompt("Delete the original video? (y/n)", type=click.Choice(['y','n','Y', 'N']))
+    if response.lower() == 'y':
+        os.remove(original_path)
 
 def print_ffmpeg(cmd):
     for line in cmd.stdout:
